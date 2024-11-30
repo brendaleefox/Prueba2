@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "294385749120",
+    "project_id": "prueba2crud-c2495",
+    "storage_bucket": "prueba2crud-c2495.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:294385749120:android:c108777a646728d7c22a65",
+        "android_client_info": {
+          "package_name": "com.pruebacrud.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4D2PY8ftGz8i9VND5cEgLc9pQrLgaC6k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

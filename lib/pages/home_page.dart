@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
   final TextEditingController horaSalidaController = TextEditingController();
   final TextEditingController acompanantesController = TextEditingController();
 
-  // Open the note dialog
+  // Open the Visitor dialog
   void openNoteBox(String? docID) {
     showDialog(
       context: context,
@@ -46,12 +46,8 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               if (nombreController.text.isNotEmpty &&
                   identificacionController.text.isNotEmpty &&
-                  motivoVisitaController.text.isNotEmpty && 
-                  quienVisitaController.text.isEmpty && 
-                  horaEntradaController.text.isNotEmpty && 
-                  horaSalidaController.text.isEmpty && 
-                  medioTransporteController.text.isEmpty &&
-                  acompanantesController.text.isEmpty) {
+                  motivoVisitaController.text.isNotEmpty 
+                  ) {
                 final data = {
                   'nombre': nombreController.text,
                   'identificacion': identificacionController.text,
@@ -66,7 +62,7 @@ class _HomePageState extends State<HomePage> {
                       .toList(),
                 };
 
-                // If the docId is null we create a new note
+                // If the docId is null we create a new visitor
                 if (docID == null) {
                   firestoreService.addNote(
                     nombre: data['nombre'] as String,
@@ -82,7 +78,7 @@ class _HomePageState extends State<HomePage> {
                         [],
                   );
                 } else {
-                  // Else, update an existing note
+                  // Else, update an existing visitor
                   firestoreService.updateNote(docID, data);
                 }
 
@@ -118,6 +114,59 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  //View the Visitor
+  void readNoteBox(String docID) async {
+    DocumentSnapshot docSnapshot =
+        await FirebaseFirestore.instance.collection('notes').doc(docID).get();
+
+    if (docSnapshot.exists) {
+      var data = docSnapshot.data() as Map<String, dynamic>;
+
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text("Detalle de Visitante"),
+          content: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Nombre del Visitante: ${data['nombre']}",
+                    style: TextStyle(fontSize: 16)),
+                Text(
+                    "Identificación del Visitane: ${data['identificacion']}",
+                    style: TextStyle(fontSize: 16)),
+                Text(
+                    "Motivo de la Visita: ${data['motivoVisita']}",
+                    style: TextStyle(fontSize: 16)),
+                Text(
+                    "A quién visita: ${data['quienVisita']}",
+                    style: TextStyle(fontSize: 16)),
+                Text("Hora de entrada: ${data['horaEntrada']}",
+                    style: TextStyle(fontSize: 16)),
+                Text("Hora de salida: ${data['horaSalida']}",
+                    style: TextStyle(fontSize: 16)),
+                Text(
+                    "Medio de transporte: ${data['medioTransporte']}",
+                    style: TextStyle(fontSize: 16)),
+                Text(
+                    "Acompañantes: ${data['acompanantes']}",
+                    style: TextStyle(fontSize: 16)),
+              ],
+            ),
+          ),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                // Close the fialog
+                Navigator.pop(context);
+              },
+              child: Text("Cerrar"),
+            ),
+          ],
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -172,7 +221,7 @@ class _HomePageState extends State<HomePage> {
                       //Read a Visitor
                       IconButton(
                         onPressed: () {
-                         
+                          readNoteBox(doc.id);
                         },
                         icon: Icon(
                           Icons.info,

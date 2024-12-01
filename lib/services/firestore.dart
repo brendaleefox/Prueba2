@@ -14,7 +14,7 @@ class FirestoreService{
     required String horaEntrada,
     required String horaSalida,
     required String medioTransporte,
-    required List<String> acompanantes,
+    required String acompanantes,
   }) {
     return notes.add({
       'nombre': nombre,

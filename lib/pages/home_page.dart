@@ -82,10 +82,7 @@ class _HomePageState extends State<HomePage> {
                   'horaEntrada': horaEntradaController.text,
                   'horaSalida': horaSalidaController.text,
                   'medioTransporte': medioTransporteController.text,
-                  'acompanantes': acompanantesController.text
-                      .split(',')
-                      .map((e) => e.trim())
-                      .toList(),
+                  'acompanantes': acompanantesController.text,
                 };
 
                 // If the docId is null we create a new visitor
@@ -98,10 +95,7 @@ class _HomePageState extends State<HomePage> {
                     horaEntrada: data['horaEntrada'] as String,
                     horaSalida: data['horaSalida'] as String,
                     medioTransporte: data['medioTransporte'] as String,
-                    acompanantes: (data['acompanantes'] as List<dynamic>?)
-                            ?.map((e) => e.toString())
-                            .toList() ??
-                        [],
+                    acompanantes: data['acompanantes'] as String,
                   );
                 } else {
                   // Else, update an existing visitor
@@ -181,12 +175,13 @@ class _HomePageState extends State<HomePage> {
               onPressed: () {
                 // Close the dialog
                 Navigator.pop(context);
-              },style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blue[900],
-              foregroundColor: Colors.white,
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue[900],
+                foregroundColor: Colors.white,
+              ),
+              child: Text("Cerrar"),
             ),
-            child: Text("Cerrar"),
-          ),
           ],
         ),
       );
